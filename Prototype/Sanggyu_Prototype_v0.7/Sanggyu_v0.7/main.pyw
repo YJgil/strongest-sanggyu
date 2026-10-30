@@ -41,7 +41,7 @@ class App:
   self.matbox=ttk.Combobox(left,state='readonly',width=44);self.matbox.pack(pady=6);self.matbox.bind('<<ComboboxSelected>>',self.choose_material)
   self.protect_var=tk.BooleanVar(value=False);self.protect_check=tk.Checkbutton(left,text='파괴 방지 · +20 달성 시 해금',variable=self.protect_var,command=self.card,bg=PANEL,fg=GOLD,selectcolor=BG,activebackground=PANEL,activeforeground=GOLD);self.protect_check.pack(pady=2)
   targetrow=tk.Frame(left,bg=PANEL);targetrow.pack(fill='x',padx=28,pady=6);self.label(targetrow,'목표 도달 시 강화 잠금',GOLD,12,True).pack(side='left');self.target_var=tk.StringVar(value=str(self.g.target));self.targetbox=ttk.Combobox(targetrow,textvariable=self.target_var,values=list(range(1,31)),state='readonly',width=5,font=('Malgun Gothic',13));self.targetbox.pack(side='right');self.targetbox.bind('<<ComboboxSelected>>',self.change_target)
-  self.upbtn=self.button(left,'강화하기',self.upgrade,TEAL,'#10241e');self.upbtn.configure(font=('Malgun Gothic',15,'bold'),height=2);self.upbtn.pack(fill='x',padx=28,pady=8)
+  self.upbtn=self.button(left,'강화하기',self.upgrade,TEAL,'#10241e',large=True);self.upbtn.pack(fill='x',padx=28,pady=8)
   self.batchbtn=self.button(left,'10회 연속 강화 · 연구 필요',self.batch_upgrade,GOLD,'#201a0e');self.batchbtn.pack(fill='x',padx=28,pady=(0,4))
   self.sellbtn=self.button(left,'판매하기',self.sell);self.sellbtn.pack(fill='x',padx=28,pady=(0,10));self.result=self.label(left,'상규는 아직 당신을 믿고 있습니다.',GOLD,11);self.result.configure(wraplength=560);self.result.pack(padx=18,pady=(5,18))
   right=tk.Frame(body,bg=BG,width=420);right.pack(side='right',fill='both');right.pack_propagate(False)
@@ -53,7 +53,19 @@ class App:
   self.footer=self.label(root,'Space 강화 · S 판매 · B 구매 (0.5초 대기) · 자동 저장 · 재료는 성공/실패와 관계없이 소모 · 실험실 기록은 일반 도감에 반영되지 않습니다',MUTED,9);self.footer.pack(pady=14)
   root.bind_class('GameKeys','<KeyPress>',self.hotkey);root.bind_class('GameKeys','<Button-1>',self.focus_game,add='+');root.after_idle(root.focus_set);self.install_keys(root);self.canvas.bind('<Configure>',lambda e:self.draw(self.g.cards.get(self.selected,0)));root.protocol('WM_DELETE_WINDOW',self.quit);self.refresh();self.log('상규 연구소에 오신 것을 환영합니다.');root.after(100,self.resize);self.show_title();self.root.after(1000,self.hunt_pulse)
  def label(self,parent,text,color=TEXT,size=12,bold=False):return tk.Label(parent,text=text,bg=parent['bg'],fg=color,font=('Malgun Gothic',max(12,size),'bold' if bold else 'normal'))
- def button(self,parent,text,fn,bg='#29334a',fg=TEXT):return tk.Button(parent,text=text,command=fn,bg=bg,fg=fg,activebackground='#425275',activeforeground=TEXT,relief='flat',bd=0,padx=14,pady=9,cursor='hand2',font=('Malgun Gothic',12))
+ def button(self,parent,text,fn,bg='#29334a',fg=TEXT,large=False):
+  # Aqua's native tk.Button ignores background colors. Clam ttk elements
+  # render the complete palette consistently on macOS and Windows.
+  name=f'Sanggyu{bg.lstrip("#")}{fg.lstrip("#")}{int(large)}.TButton'
+  style=ttk.Style(self.root)
+  style.configure(name,background=bg,foreground=fg,anchor='center',
+   font=('Malgun Gothic',15 if large else 12,'bold' if large else 'normal'),
+   padding=(14,18 if large else 9),borderwidth=1,relief='flat',
+   bordercolor=bg,lightcolor=bg,darkcolor=bg,focuscolor=GOLD)
+  style.map(name,background=[('disabled','#263149'),('pressed',bg),('active',bg)],
+   foreground=[('disabled','#b8c4d8'),('pressed',fg),('active',fg)],
+   bordercolor=[('focus',GOLD),('active',GOLD)])
+  return ttk.Button(parent,text=text,command=fn,style=name,cursor='hand2')
  def log(self,t):
   self.logs.append(t);self.logbox.configure(state='normal');self.logbox.delete('1.0','end');self.logbox.insert('end','\n\n'.join(self.logs[-30:]));self.logbox.see('end');self.logbox.configure(state='disabled')
  def save(self):

@@ -58,3 +58,7 @@ macOS: START_MAC.command 또는 python3 main.pyw. tkinter 필요.
 오류가 나면 터미널 창에 표시하고 ~/Library/Logs/StrongestSanggyu/launch.log에 기록.
 검증: 회귀/원정 테스트64개 통과. macOS 실제 Tk 창에서 주요 흐름 확인.
 Windows 실행기는 유지했으며 Windows 실제 화면은 미검증.
+
+[macOS 버튼 가독성 수정]
+도감 목차/이전·다음/전체 게임 버튼에 공통 ttk 테마 적용.
+기본/강조/비활성/포커스 상태 모두 배경·글자색 명시.
