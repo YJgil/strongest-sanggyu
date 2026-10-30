@@ -47,7 +47,7 @@
 3. **`START_GAME.vbs`**를 더블클릭합니다.
 4. 시작 화면에서 **아무 키**를 눌러 입장합니다.
 
-`assets` 폴더는 게임 파일과 함께 유지해 주세요. 실행 문제가 있다면 `START_DEBUG.bat`으로 오류를 확인할 수 있습니다. Windows 실행기를 제공하며, macOS에서는 `START_MAC.command` 또는 아래 명령으로 실행할 수 있습니다. Python에 `tkinter`가 설치되어 있어야 합니다.
+`assets` 폴더는 게임 파일과 함께 유지해 주세요. 실행 문제가 있다면 `START_DEBUG.bat`으로 오류를 확인할 수 있습니다. Windows 실행기를 제공하며, macOS에서는 `START_MAC.command` 또는 아래 명령으로 실행할 수 있습니다. Python에 `tkinter`가 설치되어 있어야 합니다. macOS 실행기는 Python 3.10+/Tk 8.6+ 환경을 자동 탐색합니다. 오류가 나면 터미널 창과 `~/Library/Logs/StrongestSanggyu/launch.log`에서 확인할 수 있습니다.
 
 ```sh
 cd Prototype/Sanggyu_Prototype_v0.7/Sanggyu_v0.7

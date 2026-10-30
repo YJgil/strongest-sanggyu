@@ -54,5 +54,7 @@ Space 강화 / B(ㅠ) +1 구매 / S(ㄴ) 판매.
 최신 버전으로 플레이한 저장은 이전 버전에서 실행하지 마세요(원정 기록 누락 가능).
 
 macOS: START_MAC.command 또는 python3 main.pyw. tkinter 필요.
+실행기는 Python 3.10+/Tk8.6+를 자동 탐색. Homebrew Python에 tkinter가 없어도 python.org 설치본으로 실행 가능.
+오류가 나면 터미널 창에 표시하고 ~/Library/Logs/StrongestSanggyu/launch.log에 기록.
 검증: 회귀/원정 테스트64개 통과. macOS 실제 Tk 창에서 주요 흐름 확인.
 Windows 실행기는 유지했으며 Windows 실제 화면은 미검증.
